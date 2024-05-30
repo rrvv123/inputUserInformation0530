@@ -13,8 +13,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
-    lateinit var textName : TextView
-    lateinit var textEmail : TextView
+    lateinit var editTextName : EditText
+    lateinit var editTextEmail : EditText
     lateinit var btnDlg : Button
     lateinit var dlgEditName : EditText  // 메모리에 할당이 되어있지 않음. 그래서 아직 메소드 정의 안해도됨. 객체가 생성되어있지 않음.
     lateinit var dlgEditEmail : EditText
@@ -27,8 +27,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         title = "사용자 정보 입력"
 
-        textName = findViewById<TextView>(R.id.textName)
-        textEmail = findViewById<TextView>(R.id.textEmail)
+        editTextName = findViewById<EditText>(R.id.editTextName)
+        editTextEmail = findViewById<EditText>(R.id.editTextEmail)
         btnDlg = findViewById<Button>(R.id.btnDlg)
 
         btnDlg.setOnClickListener {
@@ -36,12 +36,15 @@ class MainActivity : AppCompatActivity() {
             var dialog = AlertDialog.Builder(this@MainActivity)
             dialog.setTitle("사용자 정보 입력")
             dialog.setIcon(R.drawable.icon1)
+            dlgEditName = dlgView.findViewById<EditText>(R.id.editName)
+            dlgEditEmail = dlgView.findViewById<EditText>(R.id.editEmail)
+            dlgEditName.text = editTextName.text
+            dlgEditEmail.text = editTextEmail.text
             dialog.setView(dlgView)
+
             dialog.setPositiveButton("확인"){ dialog, which ->
-                dlgEditName = dlgView.findViewById<EditText>(R.id.editName)
-                dlgEditEmail = dlgView.findViewById<EditText>(R.id.editEmail)
-                textName.text = dlgEditName.text.toString()
-                textEmail.text = dlgEditEmail.text.toString()
+                editTextName.text = dlgEditName.text
+                editTextEmail.text = dlgEditEmail.text
             }
             dialog.setNegativeButton("취소"){ dialog, which ->
                 toastView = View.inflate(this@MainActivity, R.layout.toast, null)
